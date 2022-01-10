@@ -10,6 +10,7 @@
   --border-primary-color: #eeeeee;
   --border-secondary-color: #ececec;
   --primary-icon-color: #afb1b8;
+  --timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 body {
@@ -61,7 +62,7 @@ ul {
   margin: -1px;
 }
 /* Header */
-.page-header {
+.page-header.border {
   border-bottom: 1px solid var(--border-secondary-color);
 }
 .page-nav {
@@ -114,6 +115,7 @@ ul {
   margin-right: 10px;
 }
 .nav-link {
+  position: relative;
   padding-top: 32px;
   padding-bottom: 32px;
   display: block;
@@ -124,6 +126,20 @@ ul {
   font-size: 14px;
   line-height: 1.14;
   letter-spacing: 0.02em;
+
+  transition: color 250ms var(--timing-function);
+}
+.nav-link.current::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+
+  display: block;
+  width: 100%;
+  height: 4px;
+  border-radius: 2px;
+  background-color: var(--accent-color);
 }
 .nav-link:hover,
 .nav-link:focus,
@@ -149,6 +165,8 @@ ul {
   line-height: 1.14;
   letter-spacing: 0.02em;
   align-items: center;
+
+  transition: color 250ms var(--timing-function);
 }
 .auth-link:hover,
 .auth-link:focus,
@@ -203,6 +221,8 @@ ul {
   letter-spacing: 0.06em;
   cursor: pointer;
   filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+
+  transition: background-color 250ms var(--timing-function);
 }
 .hero-button:hover,
 .hero-button:focus {
@@ -219,12 +239,18 @@ ul {
 .backdrop.is-hidden {
   opacity: 0;
   pointer-events: none;
+  visibility: hidden;
+  transition: visibility 0ms 250ms, opacity 250ms;
+}
+.backdrop.is-hidden .modal {
+  transform: translate(-50%, -50%) scale(0.7);
+  opacity: 0;
 }
 .modal {
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%) scale(1);
 
   min-width: 528px;
   min-height: 581px;
@@ -233,12 +259,21 @@ ul {
   box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.12), 0px 1px 1px rgba(0, 0, 0, 0.14),
     0px 2px 1px rgba(0, 0, 0, 0.2);
   border-radius: 4px;
+
+  opacity: 1;
+  visibility: visible;
+  transition: transform 250ms var(--timing-function), opacity 250ms var(--timing-function);
 }
 .modal-btn {
   position: absolute;
   top: 8px;
   right: 8px;
 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  padding: 0;
   width: 30px;
   height: 30px;
   background-color: #ffffff;
@@ -247,6 +282,7 @@ ul {
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
+  cursor: pointer;
 }
 /* Works */
 .works-list {
@@ -362,6 +398,8 @@ ul {
   border-radius: 50%;
   background-color: rgba(255, 255, 255, 0.1);
   color: var(--white-text-color);
+
+  transition: background-color 250ms var(--timing-function);
 }
 .footer-social-icon {
   fill: currentColor;
@@ -376,6 +414,8 @@ ul {
   font-style: normal;
   font-size: 14px;
   line-height: 1.71;
+
+  transition: color 250ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 .footer-contacts:hover,
 .footer-contacts:focus {
@@ -412,6 +452,10 @@ ul {
   font-size: 16px;
   line-height: 1.63;
   cursor: pointer;
+
+  transition: color 250ms cubic-bezier(0.4, 0, 0.2, 1),
+    background-color 250ms cubic-bezier(0.4, 0, 0.2, 1),
+    box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 .filter-btn:hover,
 .filter-btn:focus {
@@ -439,11 +483,16 @@ ul {
 .project-item {
   display: block;
   text-decoration: none;
+
+  transition: box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 .project-item:hover,
 .project-item:focus {
   box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.12), 0px 4px 4px rgba(0, 0, 0, 0.06),
     1px 4px 6px rgba(0, 0, 0, 0.16);
+}
+.project-item:hover .project-overlay {
+  transform: translateY(0);
 }
 .project-box {
   padding: 20px 24px;
@@ -467,6 +516,7 @@ ul {
 }
 .project-thumb {
   position: relative;
+  overflow: hidden;
 }
 .project-overlay {
   position: absolute;
@@ -474,6 +524,8 @@ ul {
   left: 0;
   width: 100%;
   height: 100%;
+  transform: translateY(100%);
+  transition: transform 250ms cubic-bezier(0.4, 0, 0.2, 1);
 
   padding: 63px 24px;
 
@@ -540,6 +592,8 @@ ul {
   height: 44px;
   border-radius: 50%;
   color: var(--primary-icon-color);
+
+  transition: color 250ms var(--timing-function), background-color 250ms var(--timing-function);
 }
 .social-icon {
   fill: currentColor;
@@ -565,6 +619,8 @@ ul {
   border: 1px solid var(--primary-icon-color);
   border-radius: 4px;
   color: var(--primary-icon-color);
+
+  transition: color 250ms var(--timing-function), border-color 250ms var(--timing-function);
 }
 .partners-icon {
   width: 106px;
